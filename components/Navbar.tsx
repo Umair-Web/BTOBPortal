@@ -1,0 +1,270 @@
+"use client";
+
+import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
+import { Role } from "@prisma/client";
+import { useState } from "react";
+
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Products", href: "/products" },
+  { name: "Drinkware", href: "/products/drinkware" },
+  { name: "Electronics", href: "/products/electronics" },
+  { name: "Keychain", href: "/products/keychain" },
+  { name: "Accessories", href: "/products/Accessories" },
+ 
+];
+
+export function Navbar() {
+  const { data: session } = useSession();
+  const pathname = usePathname();
+  const itemCount = useCartStore((state) => state.getItemCount());
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <nav className="bg-accent text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link href="/" className="text-xl font-bold">
+              B2B Portal
+            </Link>
+            <div className="hidden md:flex md:ml-8 md:space-x-4">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`px-3 py-2 text-sm font-medium ${
+                    pathname === item.href
+                      ? "bg-white text-accent"
+                      : "hover:bg-accent-light"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            {session?.user.role === Role.ADMIN && (
+              <Link
+                href="/admin"
+                className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
+              >
+                Admin
+              </Link>
+            )}
+            {session?.user.role === Role.DELIVERY && (
+              <Link
+                href="/delivery"
+                className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
+              >
+                Delivery
+              </Link>
+            )}
+            <Link
+              href="/orders"
+              className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
+            >
+              Orders
+            </Link>
+            {session && (
+              <span className="text-sm hidden lg:inline">{session.user.email}</span>
+            )}
+            {!session && (
+              <Link
+                href="/login"
+                className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
+              >
+                Login
+              </Link>
+            )}
+            <Link
+              href="/cart"
+              className="p-2 hover:bg-accent-light relative"
+              aria-label="Shopping cart"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-accent text-xs font-bold w-5 h-5 flex items-center justify-center border border-accent">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+            {session && (
+              <button
+                onClick={() => signOut()}
+                className="p-2 hover:bg-accent-light"
+                aria-label="Logout"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center space-x-2">
+            {session && (
+              <button
+                onClick={() => signOut()}
+                className="p-2 hover:bg-accent-light"
+                aria-label="Logout"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+              </button>
+            )}
+            <Link
+              href="/cart"
+              className="p-2 hover:bg-accent-light relative"
+              aria-label="Shopping cart"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-accent text-xs font-bold w-5 h-5 flex items-center justify-center border border-accent">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 hover:bg-accent-light"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {mobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-accent-light">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2 text-base font-medium ${
+                    pathname === item.href
+                      ? "bg-white text-accent"
+                      : "hover:bg-accent-light"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              {session?.user.role === Role.ADMIN && (
+                <Link
+                  href="/admin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-base font-medium hover:bg-accent-light"
+                >
+                  Admin
+                </Link>
+              )}
+              {session?.user.role === Role.DELIVERY && (
+                <Link
+                  href="/delivery"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-base font-medium hover:bg-accent-light"
+                >
+                  Delivery
+                </Link>
+              )}
+              <Link
+                href="/orders"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 text-base font-medium hover:bg-accent-light"
+              >
+                Orders
+              </Link>
+              {session ? (
+                <>
+                  <div className="px-3 py-2 text-sm text-gray-200 border-t border-accent-light mt-2 pt-2">
+                    {session.user.email}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signOut();
+                    }}
+                    className="block w-full text-left px-3 py-2 text-base font-medium hover:bg-accent-light"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-base font-medium hover:bg-accent-light"
+                >
+                  Login
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
