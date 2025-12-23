@@ -28,42 +28,67 @@ export default async function ProductDetailPage({
       idLower.charAt(0).toUpperCase() + idLower.slice(1);
 
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen flex flex-col bg-white">
         <Navbar />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">{categoryTitle}</h1>
+        <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-reveal">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900">{categoryTitle}</h1>
+              <p className="text-sm text-slate-600">
+                Products curated under the {categoryTitle.toLowerCase()} category.
+              </p>
+            </div>
+            <p className="text-xs text-slate-500">
+              Showing <span className="font-semibold">{products.length}</span> items
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product.id}`}
-                className="border border-gray-200 bg-white hover:border-accent transition-colors"
+                className="group relative rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
               >
                 {product.images[0] && (
-                  <div className="aspect-square bg-gray-100 relative overflow-hidden">
+                  <div className="aspect-[4/3] bg-slate-50 relative overflow-hidden">
                     <img
                       src={product.images[0]}
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 )}
                 <div className="p-4">
-                  <h3 className="font-semibold text-lg text-gray-900 mb-2">{product.name}</h3>
-                  <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-                  <p className="text-xl font-bold text-accent">PKR {product.price.toFixed(2)}</p>
-                  {product.stock > 0 ? (
-                    <p className="text-sm text-gray-500 mt-2">In Stock: {product.stock}</p>
-                  ) : (
-                    <p className="text-sm text-red-500 mt-2">Out of Stock</p>
-                  )}
+                  <p className="text-xs font-medium text-lime-700 mb-1 uppercase tracking-wide">
+                    {product.category || categoryTitle}
+                  </p>
+                  <h3 className="font-semibold text-base text-slate-900 mb-1 line-clamp-1">
+                    {product.name}
+                  </h3>
+                  <p className="text-xs text-slate-500 mb-2 line-clamp-2">{product.description}</p>
+                  <div className="flex items-center justify-between mt-2">
+                    <p className="text-lg font-bold text-emerald-700">
+                      PKR {product.price.toFixed(0)}
+                    </p>
+                    <span
+                      className={`inline-flex items-center rounded-full px-3 py-1 text-[0.7rem] font-semibold ${
+                        product.stock > 0
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-red-50 text-red-600"
+                      }`}
+                    >
+                      {product.stock > 0 ? `In stock: ${product.stock}` : "Out of stock"}
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
+
           {products.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500">No products found in this category.</p>
+              <p className="text-slate-500">No products found in this category.</p>
             </div>
           )}
         </main>
@@ -81,13 +106,13 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-reveal">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div className="space-y-4">
             {product.images[0] && (
-              <div className="aspect-square bg-gray-100 relative overflow-hidden border border-gray-200">
+              <div className="aspect-square bg-slate-50 relative overflow-hidden rounded-[1.75rem] border border-slate-100 shadow-sm">
                 <img
                   src={product.images[0]}
                   alt={product.name}
@@ -96,11 +121,11 @@ export default async function ProductDetailPage({
               </div>
             )}
             {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4 mt-4">
+              <div className="grid grid-cols-4 gap-4">
                 {product.images.slice(1).map((image, index) => (
                   <div
                     key={index}
-                    className="aspect-square bg-gray-100 relative overflow-hidden border border-gray-200"
+                    className="aspect-square bg-slate-50 relative overflow-hidden rounded-2xl border border-slate-100"
                   >
                     <img
                       src={image}
@@ -113,23 +138,35 @@ export default async function ProductDetailPage({
             )}
           </div>
 
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
-            <p className="text-3xl font-bold text-accent mb-6">PKR {product.price.toFixed(2)}</p>
-            <div className="mb-6">
-              <p className="text-gray-700 whitespace-pre-wrap">{product.description}</p>
+          <div className="rounded-3xl bg-white border border-slate-100 shadow-sm p-6 lg:p-8">
+            <p className="text-xs font-medium text-lime-700 mb-2 uppercase tracking-[0.25em]">
+              {product.category || "Product"}
+            </p>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">
+              {product.name}
+            </h1>
+            <p className="text-2xl sm:text-3xl font-bold text-emerald-700 mb-6">
+              PKR {product.price.toFixed(0)}
+            </p>
+
+            <div className="mb-6 text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">
+              {product.description}
             </div>
 
-            <div className="mb-6">
-              <p className="text-sm font-medium text-gray-700 mb-2">Category:</p>
-              <p className="text-gray-600">{product.category}</p>
+            <div className="mb-4 flex flex-wrap gap-3 text-sm">
+              <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-slate-700">
+                Category: <span className="ml-1 font-semibold">{product.category}</span>
+              </span>
+              <span
+                className={`inline-flex items-center rounded-full px-3 py-1 font-semibold ${
+                  product.stock > 0
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "bg-red-50 text-red-600"
+                }`}
+              >
+                {product.stock > 0 ? `In stock: ${product.stock} units` : "Out of stock"}
+              </span>
             </div>
-
-            {product.stock > 0 ? (
-              <p className="text-green-600 font-medium mb-6">In Stock: {product.stock} units</p>
-            ) : (
-              <p className="text-red-500 font-medium mb-6">Out of Stock</p>
-            )}
 
             <AddToCartButton product={product} />
           </div>

@@ -10,14 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         accent: {
-          DEFAULT: "#5B9BD5",
-          light: "#7DB4E6",
-          dark: "#3A7BC8",
+          DEFAULT: "#788F35",
+          light: "#A9BF4B",
+          dark: "#4E6429",
         },
+        brandYellow: "#CCBE1A",
       },
       borderRadius: {
-        DEFAULT: "0",
+        DEFAULT: "0.75rem",
       },
+      
     },
   },
   plugins: [],

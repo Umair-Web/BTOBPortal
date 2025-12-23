@@ -45,7 +45,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
               <button
                 key={color}
                 onClick={() => setSelectedColor(color)}
-                className={`px-4 py-2 border-2 ${
+                className={`px-4 py-2 border-2 rounded-full ${
                   selectedColor === color
                     ? "border-accent bg-accent text-white"
                     : "border-gray-300 bg-white text-gray-700 hover:border-accent"
@@ -59,10 +59,10 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
       )}
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center border border-gray-300">
+        <div className="flex items-center border border-gray-300 rounded-full">
           <button
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200"
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full"
             disabled={quantity <= 1}
           >
             -
@@ -77,7 +77,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
           />
           <button
             onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200"
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full"
             disabled={quantity >= product.stock}
           >
             +
@@ -87,7 +87,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className="flex-1 bg-accent text-white px-6 py-3 font-medium hover:bg-accent-dark disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 bg-accent text-white px-6 py-3 font-medium hover:bg-accent-dark disabled:opacity-50 disabled:cursor-not-allowed border border-accent rounded-full"
         >
           {showSuccess ? "✓ Added to Cart" : "Add to Cart"}
         </button>

@@ -63,7 +63,7 @@ export function PlaceOrderButton({ items, total }: PlaceOrderButtonProps) {
     <>
       <button
         onClick={() => setShowModal(true)}
-        className="w-full bg-accent text-white py-3 px-4 font-medium hover:bg-accent-dark"
+        className="w-full bg-accent text-white py-3 px-4 font-medium hover:bg-accent-dark rounded-full"
       >
         Place Order
       </button>

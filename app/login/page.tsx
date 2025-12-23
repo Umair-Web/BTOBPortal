@@ -38,16 +38,22 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-white">
+      <div className="max-w-md w-full space-y-8 scroll-reveal">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-slate-900 mb-2">
             Sign in to your account
           </h2>
+          <p className="text-sm text-slate-600">
+            Access your orders, cart, and admin tools.
+          </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form
+          className="mt-6 space-y-6 rounded-3xl border border-slate-100 bg-white shadow-sm p-6"
+          onSubmit={handleSubmit}
+        >
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-2xl text-sm">
               {error}
             </div>
           )}
@@ -64,7 +70,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                className="mt-1 block w-full px-3 py-2 border border-slate-200 rounded-full bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
               />
             </div>
             <div>
@@ -79,7 +85,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                className="mt-1 block w-full px-3 py-2 border border-slate-200 rounded-full bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
               />
             </div>
           </div>
@@ -88,7 +94,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-accent text-white py-2 px-4 font-medium hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-50"
+              className="w-full rounded-full bg-slate-900 text-white py-2 px-4 text-sm font-semibold hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2 disabled:opacity-50"
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>

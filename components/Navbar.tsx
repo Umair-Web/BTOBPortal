@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 import { Role } from "@prisma/client";
 import { useState } from "react";
+import logo from "../assets/logo.png";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -14,7 +16,6 @@ const navigation = [
   { name: "Electronics", href: "/products/electronics" },
   { name: "Keychain", href: "/products/keychain" },
   { name: "Accessories", href: "/products/Accessories" },
- 
 ];
 
 export function Navbar() {
@@ -24,23 +25,29 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-accent text-white">
+    <nav className="bg-gradient-to-r from-[#CCBE1A] to-[#788F35] text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold">
-              B2B Portal
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src={logo}
+                alt="B2B Portal logo"
+                width={140}
+                height={40}
+                className="h-16 w-auto object-contain"
+                priority
+              />
             </Link>
             <div className="hidden md:flex md:ml-8 md:space-x-4">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`px-3 py-2 text-sm font-medium ${
-                    pathname === item.href
-                      ? "bg-white text-accent"
-                      : "hover:bg-accent-light"
-                  }`}
+                  className={`px-3 py-2 text-sm font-medium rounded-full transition-colors ${pathname === item.href
+                      ? "bg-white/95 text-[#4b5b1f]"
+                      : "hover:bg-white/15"
+                    }`}
                 >
                   {item.name}
                 </Link>
@@ -49,11 +56,11 @@ export function Navbar() {
           </div>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             {session?.user.role === Role.ADMIN && (
               <Link
                 href="/admin"
-                className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
+                className="px-4 py-2 text-sm font-medium rounded-full hover:bg-white/15"
               >
                 Admin
               </Link>
@@ -61,17 +68,19 @@ export function Navbar() {
             {session?.user.role === Role.DELIVERY && (
               <Link
                 href="/delivery"
-                className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
+                className="px-4 py-2 text-sm font-medium rounded-full hover:bg-white/15"
               >
                 Delivery
               </Link>
             )}
-            <Link
-              href="/orders"
-              className="px-4 py-2 text-sm font-medium hover:bg-accent-light"
-            >
-              Orders
-            </Link>
+
+            {session?.user.role === Role.USER && ( <Link
+                href="/orders"
+                className="px-4 py-2 text-sm font-medium rounded-full hover:bg-white/15"
+              >
+                Orders
+              </Link>)}
+             
             {session && (
               <span className="text-sm hidden lg:inline">{session.user.email}</span>
             )}
@@ -85,7 +94,7 @@ export function Navbar() {
             )}
             <Link
               href="/cart"
-              className="p-2 hover:bg-accent-light relative"
+              className="p-2 rounded-full hover:bg-white/15 relative"
               aria-label="Shopping cart"
             >
               <svg
@@ -100,7 +109,7 @@ export function Navbar() {
                 <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-white text-accent text-xs font-bold w-5 h-5 flex items-center justify-center border border-accent">
+                <span className="absolute -top-1 -right-1 bg-white text-[#4b5b1f] text-xs font-bold w-5 h-5 flex items-center justify-center border border-white/70 rounded-full">
                   {itemCount}
                 </span>
               )}
@@ -108,7 +117,7 @@ export function Navbar() {
             {session && (
               <button
                 onClick={() => signOut()}
-                className="p-2 hover:bg-accent-light"
+                className="p-2 rounded-full hover:bg-white/15"
                 aria-label="Logout"
               >
                 <svg
@@ -131,7 +140,7 @@ export function Navbar() {
             {session && (
               <button
                 onClick={() => signOut()}
-                className="p-2 hover:bg-accent-light"
+                className="p-2 rounded-full hover:bg-white/15"
                 aria-label="Logout"
               >
                 <svg
@@ -149,7 +158,7 @@ export function Navbar() {
             )}
             <Link
               href="/cart"
-              className="p-2 hover:bg-accent-light relative"
+              className="p-2 rounded-full hover:bg-white/15 relative"
               aria-label="Shopping cart"
             >
               <svg
@@ -164,14 +173,14 @@ export function Navbar() {
                 <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-white text-accent text-xs font-bold w-5 h-5 flex items-center justify-center border border-accent">
+                <span className="absolute -top-1 -right-1 bg-white text-[#4b5b1f] text-xs font-bold w-5 h-5 flex items-center justify-center border border-white/70 rounded-full">
                   {itemCount}
                 </span>
               )}
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 hover:bg-accent-light"
+              className="p-2 rounded-full hover:bg-white/15"
               aria-label="Toggle menu"
             >
               <svg
@@ -202,11 +211,10 @@ export function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-3 py-2 text-base font-medium ${
-                    pathname === item.href
+                  className={`block px-3 py-2 text-base font-medium ${pathname === item.href
                       ? "bg-white text-accent"
                       : "hover:bg-accent-light"
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </Link>

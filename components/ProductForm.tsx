@@ -157,7 +157,7 @@ export function ProductForm({ product }: ProductFormProps) {
         </label>
         <input
           {...register("name")}
-          className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+          className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent rounded-full"
         />
         {errors.name && (
           <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -171,7 +171,7 @@ export function ProductForm({ product }: ProductFormProps) {
         <textarea
           {...register("description")}
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+          className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent rounded-md"
         />
         {errors.description && (
           <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
@@ -185,7 +185,7 @@ export function ProductForm({ product }: ProductFormProps) {
             type="number"
             step="0.01"
             {...register("price", { valueAsNumber: true })}
-            className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+            className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent rounded-full"
           />
           {errors.price && (
             <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
@@ -197,7 +197,7 @@ export function ProductForm({ product }: ProductFormProps) {
           <input
             type="number"
             {...register("stock", { valueAsNumber: true })}
-            className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+            className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent rounded-full"
           />
           {errors.stock && (
             <p className="text-red-500 text-sm mt-1">{errors.stock.message}</p>
@@ -209,7 +209,7 @@ export function ProductForm({ product }: ProductFormProps) {
         <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
         <select
           {...register("category")}
-          className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+          className="w-full px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent rounded-full"
         >
           <option value="Drinkware">Drinkware</option>
           <option value="Electronics">Electronics</option>
@@ -306,12 +306,12 @@ export function ProductForm({ product }: ProductFormProps) {
               }
             }}
             placeholder="Enter color name"
-            className="flex-1 px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+            className="flex-1 px-3 py-2 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent rounded-full"
           />
           <button
             type="button"
             onClick={addColorVariant}
-            className="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300"
+            className="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-full"
           >
             Add
           </button>
@@ -339,14 +339,14 @@ export function ProductForm({ product }: ProductFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
+          className="px-6 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-6 py-2 bg-accent text-white hover:bg-accent-dark disabled:opacity-50"
+          className="px-6 py-2 bg-accent text-white hover:bg-accent-dark disabled:opacity-50 rounded-full"
         >
           {isSubmitting ? "Saving..." : product ? "Update Product" : "Create Product"}
         </button>

@@ -25,17 +25,20 @@ export function GenerateQuotationButton({ items }: GenerateQuotationButtonProps)
 
       // Generate PDF
       const doc = new jsPDF();
-      
-      // Letterhead
-      doc.setFillColor(91, 155, 213); // Light blue
-      doc.rect(0, 0, 210, 40, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(24);
-      doc.text("B2B Portal", 105, 20, { align: "center" });
-      doc.setFontSize(12);
-      doc.text("Business to Business E-commerce", 105, 28, { align: "center" });
 
-      // Reset text color
+      // Letterhead - themed to match app (brand yellow / green)
+      doc.setFillColor(204, 190, 26); // #CCBE1A
+      doc.rect(0, 0, 210, 35, "F");
+      doc.setFillColor(120, 143, 53); // #788F35
+      doc.rect(0, 30, 210, 5, "F");
+
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.text("B2B Portal", 105, 18, { align: "center" });
+      doc.setFontSize(11);
+      doc.text("Business to Business E-commerce", 105, 25, { align: "center" });
+
+      // Reset text color for body
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(18);
       doc.text("QUOTATION", 20, 55);
@@ -60,7 +63,8 @@ export function GenerateQuotationButton({ items }: GenerateQuotationButtonProps)
         head: [["#", "Product", "Color", "Quantity", "Unit Price", "Total"]],
         body: tableData,
         styles: { fontSize: 9 },
-        headStyles: { fillColor: [91, 155, 213] },
+        headStyles: { fillColor: [120, 143, 53] }, // #788F35
+        alternateRowStyles: { fillColor: [246, 248, 237] },
       });
 
       // Total
@@ -102,11 +106,11 @@ export function GenerateQuotationButton({ items }: GenerateQuotationButtonProps)
     <button
       onClick={generateQuotation}
       disabled={isGenerating || isGenerated}
-      className={`w-full py-3 px-4 font-medium ${
+      className={`w-full py-3 px-4 text-sm font-semibold flex items-center justify-center gap-2 rounded-full transition-colors ${
         isGenerated
-          ? "bg-green-600 text-white"
-          : "bg-accent text-white hover:bg-accent-dark"
-      } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+          ? "bg-emerald-600 text-white"
+          : "bg-slate-900 text-white hover:bg-slate-800"
+      } disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       {isGenerating ? (
         "Generating..."

@@ -9,42 +9,67 @@ export default async function ProductsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">All Products</h1>
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-reveal">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900">All Products</h1>
+            <p className="text-sm text-slate-600">
+              Browse the full catalog of items available for quotations and orders.
+            </p>
+          </div>
+          <p className="text-xs text-slate-500">
+            Showing <span className="font-semibold">{products.length}</span> products
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
             <Link
               key={product.id}
               href={`/products/${product.id}`}
-              className="border border-gray-200 bg-white hover:border-accent transition-colors"
+              className="group relative rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
             >
               {product.images[0] && (
-                <div className="aspect-square bg-gray-100 relative overflow-hidden">
+                <div className="aspect-[4/3] bg-slate-50 relative overflow-hidden">
                   <img
                     src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
               )}
               <div className="p-4">
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">{product.name}</h3>
-                <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-                <p className="text-xl font-bold text-accent">PKR {product.price.toFixed(2)}</p>
-                {product.stock > 0 ? (
-                  <p className="text-sm text-gray-500 mt-2">In Stock: {product.stock}</p>
-                ) : (
-                  <p className="text-sm text-red-500 mt-2">Out of Stock</p>
-                )}
+                <p className="text-xs font-medium text-lime-700 mb-1 uppercase tracking-wide">
+                  {product.category || "Product"}
+                </p>
+                <h3 className="font-semibold text-base text-slate-900 mb-1 line-clamp-1">
+                  {product.name}
+                </h3>
+                <p className="text-xs text-slate-500 mb-2 line-clamp-2">{product.description}</p>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-lg font-bold text-emerald-700">
+                    PKR {product.price.toFixed(0)}
+                  </p>
+                  <span
+                    className={`inline-flex items-center rounded-full px-3 py-1 text-[0.7rem] font-semibold ${
+                      product.stock > 0
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "bg-red-50 text-red-600"
+                    }`}
+                  >
+                    {product.stock > 0 ? `In stock: ${product.stock}` : "Out of stock"}
+                  </span>
+                </div>
               </div>
             </Link>
           ))}
         </div>
+
         {products.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500">No products found.</p>
+            <p className="text-slate-500">No products found.</p>
           </div>
         )}
       </main>
