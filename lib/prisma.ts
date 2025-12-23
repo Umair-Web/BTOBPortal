@@ -1,3 +1,21 @@
+// import { PrismaClient } from "@prisma/client";
+
+// const globalForPrisma = globalThis as unknown as {
+//   prisma: PrismaClient | undefined;
+// };
+
+// export const prisma =
+//   globalForPrisma.prisma ??
+//   new PrismaClient({
+//     log: ["query"],
+//   });
+
+// if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+
+
+
+// lib/prisma.ts (or wherever your file is)
 import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
@@ -5,10 +23,11 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 export const prisma =
-  globalForPrisma.prisma ??
+  globalForPrisma. prisma ??
   new PrismaClient({
-    log: ["query"],
+    log:  process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
-
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma. prisma = prisma;
+}
