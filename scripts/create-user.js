@@ -39,6 +39,50 @@ async function createUser() {
     await prisma.$disconnect();
   }
 }
+async function createAdmin() {
+  // Default admin credentials
+  const email = 'admin@gmail.com';
+  const password = '123';
+  const name = 'Admin User';
+  const role = 'ADMIN';
 
+  try {
+    console.log('🔐 Creating admin user...');
+    
+    const hashedPassword = await bcrypt. hash(password, 10);
+    
+    const user = await prisma.user. create({
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+        role,
+      },
+    });
+
+    console.log('\n✅ Admin user created successfully! ');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`📧 Email: ${user.email}`);
+    console.log(`🔑 Password: ${password}`);
+    console.log(`👤 Role: ${user.role}`);
+    console.log(`🆔 ID: ${user.id}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('\n💡 Use these credentials to login at:');
+    console.log('   https://btobportal.vercel.app/login');
+    
+  } catch (error) {
+    if (error.code === 'P2002') {
+      console.error('\n⚠️  Admin user already exists!');
+      console.log('📧 Email:  admin@btobportal.com');
+      console.log('🔑 Password: admin123');
+    } else {
+      console.error('\n❌ Error creating admin user:', error.message);
+    }
+    process.exit(1);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 createUser();
+createAdmin();
 
