@@ -1,16 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("registered") === "true") {
+      setSuccess("Account created successfully! Please sign in.");
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +61,11 @@ export default function LoginPage() {
           className="mt-6 space-y-6 rounded-3xl border border-slate-100 bg-white shadow-sm p-6"
           onSubmit={handleSubmit}
         >
+          {success && (
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-2xl text-sm">
+              {success}
+            </div>
+          )}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-2xl text-sm">
               {error}
@@ -99,6 +112,13 @@ export default function LoginPage() {
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>
+          </div>
+
+          <div className="text-center text-sm">
+            <span className="text-gray-600">Don't have an account? </span>
+            <Link href="/signup" className="text-slate-900 font-medium hover:text-slate-700">
+              Sign up
+            </Link>
           </div>
         </form>
       </div>

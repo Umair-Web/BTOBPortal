@@ -36,6 +36,7 @@ export default auth((req) => {
   const publicRoutes = [
     "/",           // Homepage
     "/login",      // Login page
+    "/signup",     // Signup page
     "/products",   // Products page
     "/cart",       // Cart page
   ];
