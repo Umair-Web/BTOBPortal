@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { Role } from "@prisma/client";
 import Link from "next/link";
+import Image from "next/image";
 import { DeleteProductButton } from "@/components/DeleteProductButton";
 
 export default async function AdminPage() {
@@ -53,9 +54,11 @@ export default async function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     {product.images[0] ? (
                       <div className="w-16 h-16 bg-slate-50 rounded-2xl overflow-hidden">
-                        <img
+                        <Image
                           src={product.images[0]}
                           alt={product.name}
+                          width={64}
+                          height={64}
                           className="w-full h-full object-cover"
                         />
                       </div>

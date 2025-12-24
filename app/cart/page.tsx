@@ -3,6 +3,7 @@
 import { Navbar } from "@/components/Navbar";
 import { useCartStore } from "@/store/cartStore";
 import Link from "next/link";
+import Image from "next/image";
 import { GenerateQuotationButton } from "@/components/GenerateQuotationButton";
 import { PlaceOrderButton } from "@/components/PlaceOrderButton";
 
@@ -45,9 +46,11 @@ export default function CartPage() {
                 <div className="flex gap-4">
                   {item.image && (
                     <div className="w-24 h-24 bg-slate-50 flex-shrink-0 rounded-2xl overflow-hidden">
-                      <img
+                      <Image
                         src={item.image}
                         alt={item.name}
+                        width={96}
+                        height={96}
                         className="w-full h-full object-cover"
                       />
                     </div>
