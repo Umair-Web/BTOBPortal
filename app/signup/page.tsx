@@ -33,9 +33,10 @@ export default function SignUpPage() {
 
       if (!response.ok) {
         setError(data.error || "Failed to create account");
+        console.error("Signup error:", data.error);
         return;
       }
-
+      
       // Redirect to login page after successful signup
       router.push("/login?registered=true");
     } catch (err) {
@@ -142,6 +143,8 @@ export default function SignUpPage() {
               >
                 <option value="ADMIN">Admin</option>
                 <option value="DELIVERY">Delivery Personnel</option>
+                <option value="USER">User</option>
+                
               </select>
             </div>
           </div>

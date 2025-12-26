@@ -9,7 +9,8 @@ export default async function ProductsPage() {
   const products = await prisma.product.findMany({
     orderBy: { createdAt: "desc" },
   });
-
+  
+  console.log("Fetched products:", products);
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
